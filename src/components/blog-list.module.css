@@ -1,0 +1,46 @@
+.page-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding-top: 10;
+}
+.page-item {
+    padding-left: 5px;
+}
+.post-list {
+    list-style: none;
+    padding-left: 0;
+}
+.post-item {
+    /* height: 60px; */
+    font-size: 1.2rem;
+    margin-bottom: 28px;
+}
+.post-header {
+    display: flex;
+    height: 24px;
+}
+.post-date {
+    display: flex;
+    font-size: 0.8rem;
+    align-items: center;
+}
+.tag-list {
+    display: flex;
+    list-style: none;
+    padding-inline-start: 5px;
+    align-items: center;
+}
+.tag-item {
+    font-size: 0.8rem;
+    padding-right: 5px;
+}
+.tag-link {
+    color: gray;
+    text-decoration: none;
+}
+.excerpt {
+    font-size: 1rem;
+}

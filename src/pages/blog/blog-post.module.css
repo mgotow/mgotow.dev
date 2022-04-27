@@ -1,0 +1,36 @@
+h2 {
+  padding: 3px 0 3px 10px;
+  border-left: 4px solid
+}
+
+table, td, th {
+  border-collapse: collapse;
+  border: 1px black solid;
+}
+
+td, th {
+  height: 40px;
+  padding: 8px;
+}
+
+.tag-list {
+  display: flex;
+  list-style: none;
+  padding-inline-start: 0px;
+  margin-block-start: 0rem;
+  margin-block-end: 0rem;
+}
+
+.tag-item {
+  font-size: 1rem;
+  padding-right: 5px;
+}
+
+.tag-link {
+  color: gray;
+  text-decoration: none;
+}
+
+.posted {
+  margin-block-start: 0rem;
+}
