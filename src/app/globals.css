@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  pre {
+    @apply p-4 rounded overflow-x-auto;
+  };
+  a {
+    @apply underline underline-offset-4;
+  };
+  h2 {
+    @apply text-xl mt-4 mb-4 font-bold;
+  }
+  h3 {
+    @apply text-lg mt-2 mb-2 font-bold;
+  }
+}

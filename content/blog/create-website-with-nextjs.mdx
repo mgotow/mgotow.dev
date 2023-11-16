@@ -1,0 +1,220 @@
+---
+title: Next.jsで個人サイトを作成しました
+publishedAt: 2023-11-16
+summary: NextJSで個人サイトを作成しました
+tags: [nextjs, react]
+---
+
+個人サイトを運用してブログ記事や日記を書いていきたいと思い、Next.js(App router)で作成してみました。
+
+VercelのVP、leerob氏の[サイト](https://leerob.io/)の[コード](https://github.com/leerob/leerob.io)を参考に、contentlayerを使用してmarkdownから記事を生成することにしました。
+
+ブログは、技術的な記事を中心に書いて、自身の備忘録や学習のため、たまたま辿りついた誰かのためになれたらよいなあと思います。
+
+日記は、ただの日記です😇。気が向いたときに、日々の出来事や考えたこととか書いていきたいです。
+
+以下、Next.jsでこのサイトを構築する際に実装したものをご紹介します。
+
+## ブログのタグページを作成
+
+### 1. contentlayer.config.jsのBlogのドキュメント定義にtag項目を追加
+contentlayer.config.js
+```js
+export const Blog = defineDocumentType(() => ({
+  name: 'Blog',
+  filePathPattern: 'blog/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: {
+      type: 'string',
+      required: true,
+    },
+    publishedAt: {
+      type: 'string',
+      required: true,
+    },
+    summary: {
+      type: 'string',
+      required: true,
+    },
+    image: {
+      type: 'string',
+    },
+    tags: {
+      type: 'list',
+      of: { type: 'string' },
+    },
+  },
+  computedFields,
+}));
+```
+
+### 2. タグページを作成
+
+app/blog/tag/[tag]/page.tsx
+```tsx
+export async function generateMetadata({
+  params,
+}): Promise<Metadata | undefined> {
+  return {
+    title: "tag: \"" + params.tag + "\"",
+    description: 'mgotow\'s blog posts for the tag: \"' + params.tag + "\""
+  };
+}
+
+export default async function TagPage({ params }) {
+  const posts = allBlogs
+    .filter(blog => blog.tags.includes(params.tag))
+    .sort((a, b) => {
+      if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
+        return -1;
+      }
+      return 1;
+    });
+
+  if (!posts) {
+    notFound();
+  }
+
+  return (
+    <section>
+      <h1 className="text-2xl font-bold mb-4">Blog posts tag: "{params.tag}"</h1>
+      <ul className="flex flex-col gap-6">
+        {posts.map((post) => (
+          <BlogListItem post={post} key={post.slug} />
+        ))}
+      </ul>
+    </section>
+  )
+}
+```
+
+## ブログ記事のページネーションを実装
+
+### 1. ページネーションコンポーネントを作成
+
+components/pagination.tsx
+```tsx
+export default function Pagination({ linkPath, totalPage, currentPage}: PageProps) {
+
+  const GoFirst = () => {
+    if (Number(currentPage) > 1) {
+      return (
+        <li>
+          <Link
+            className="text-black p-2 rounded border border-black"
+            href={linkPath + "/1"}>
+            {"<<"}
+          </Link>
+        </li>
+      );
+    } else {
+      return ""
+    }
+  }
+
+  const GoPrev = () => {
+    if (Number(currentPage) > 1) {
+      return (
+        <li>
+          <Link
+            className="text-black p-2 rounded border border-black"
+            href={linkPath + "/" + (Number(currentPage) - 1)}>
+            {"<"}
+          </Link>
+        </li>
+      );
+    } else {
+      return "";
+    }
+  }
+
+  const GoNext = () => {
+    if (Number(currentPage) < Number(totalPage)) {
+      return (
+        <li>
+          <Link
+            className="text-black p-2 rounded border border-black"
+            href={linkPath + "/" + (Number(currentPage) + 1)}>
+            {">"}
+          </Link>
+        </li>
+      );
+    } else {
+      return "";
+    }
+  }
+
+  const GoLast = () => {
+    if (currentPage < totalPage) {
+      return (
+        <li>
+          <Link
+            className="text-black p-2 rounded border border-black"
+            href={linkPath + "/" + totalPage}>
+            {">>"}
+          </Link>
+        </li>
+      );
+    } else {
+      return "";
+    }
+  }
+
+  return (
+    <nav className="mb-6 mt-6">
+      <ul className="flex items-center justify-center gap-4">
+        <GoFirst />
+        <GoPrev />
+        <li>
+          <p>{currentPage} / {totalPage}</p>
+        </li>
+        <GoNext />
+        <GoLast />
+      </ul>
+    </nav>
+  );
+}
+```
+
+### 2. ページネーションページを作成
+
+app/blog/page/[page]/page.tsx
+```tsx
+export async function generateMetadata({
+  params,
+}): Promise<Metadata | undefined> {
+  return {
+    title: "page: " + params.page + "\"",
+    description: 'mgotow\'s blog posts page: ' + params.page
+  };
+}
+
+export default async function Page({ params }) {
+  const totalPage = Math.ceil(allBlogs.length / 10);
+  const num = params.page - 1;
+  const posts = allBlogs
+    .sort((a, b) => {
+      if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
+        return -1;
+      }
+      return 1;
+    }).slice(10 * num, 10 * num + 10);
+  
+    if (!posts) {
+      notFound();
+    }
+
+    return (
+      <section>
+        <h1 className="text-2xl font-bold mb-4">Blog posts page: {params.page}</h1>
+        <ul className="flex flex-col gap-6">
+          {posts.map((post) => (
+            <BlogListItem post={post} key={post.slug} />
+          ))}
+        </ul>
+        <Pagination linkPath="/blog/page" totalPage={totalPage} currentPage={params.page} />
+      </section>
+    )
+}
+```
