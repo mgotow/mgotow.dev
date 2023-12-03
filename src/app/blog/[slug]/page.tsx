@@ -61,7 +61,7 @@ export default async function Blog({ params }) {
           __html: JSON.stringify(post.structuredData),
         }}
       ></script>
-      <h1 className="font-bold text-2xl tracking-tighter max-w-[650px]">
+      <h1 className="font-bold text-2xl tracking-tighter">
         {post.title}
       </h1>
       <div className="flex justify-start items-center mt-2 mb-4 gap-2 text-sm max-w-[650px]">
