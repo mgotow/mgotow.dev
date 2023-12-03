@@ -1,0 +1,67 @@
+---
+title: スマホのディスプレイをスリープさせなくするブックマークレットを作成した
+publishedAt: 2023-12-02
+summary: スマホのブラウザ使用時にスリープさせなくするブックマークレットを作成しました
+tags: [bookmarklet]
+---
+
+## 作ったきっかけ
+
+私は普段、スマホでレシピを参照しながら料理をしているのですが、調理中にスマホがスリープしてしまうと、レシピを確認するたびにスリープ解除をしなければならなくて、これがとても面倒でした。
+
+「[クラシル](https://www.kurashiru.com/)」というレシピサイトのスマホアプリでは、レシピページを開いている間スリープしない機能があり、これが便利でこのアプリをよく使っています。
+
+この機能が全てのレシピサイトでできたらと思って、スマホのスリープを防ぐWake Lock APIを使用したブックマークレットを作成してみました。
+
+## 使用方法
+
+適当にブックマークしたものを編集して、ブックマーク名を「WakeLock」にして、URLに以下のコードをコピペしてください。
+
+```js
+javascript:(function()%7B(async%20()%20%3D%3E%20%7B%0A%20%20alert(%22WakeLock%E3%82%92%E3%82%AA%E3%83%B3%E3%81%AB%E3%81%97%E3%81%BE%E3%81%99%22)%3B%0A%20%20wakeLock%20%3D%20await%20navigator.wakeLock.request('screen')%3B%0A%20%20wakeLock.addEventListener('release'%2C%20(e)%20%3D%3E%20%7B%0A%20%20%20%20alert(%22WakeLock%E3%81%AF%E8%A7%A3%E9%99%A4%E3%81%95%E3%82%8C%E3%81%BE%E3%81%97%E3%81%9F%22)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%7D)%3B%0A%7D)()%3B%7D)()%3B
+```
+
+<Image
+  src="/images/wake-lock-bookmarklet/edit-bookmark.png"
+  alt="edit bookmark"
+  width="300"
+  height="300"
+/>
+
+※AndroidのChromeでは、ブックマークのタップではブックマークレットを実行できないみたいなので、URLにブックマーク名(例ではWakeLock)を打ち込んで、サジェストされたブックマークをタップすることで実行できます。(面倒ですね。。)
+
+※iOSのSafariとChromeではブックマークのタップで問題なく起動できるみたいです。
+
+<Image
+  src="/images/wake-lock-bookmarklet/chrome-bookmarklet.png"
+  alt="android chrome suggest"
+  width="200"
+  height="600"
+/>
+
+## 使ってみて
+
+調理中にスリープしないだけの機能ですが、私的にはとても快適になりました。
+
+Androidで起動方法が若干面倒なので、もっと良い方法があればよいのですが。。
+
+## コード
+
+```js
+javascript:(async () => {
+  alert("WakeLockをオンにします");
+  wakeLock = await navigator.wakeLock.request('screen');
+  wakeLock.addEventListener('release', (e) => {
+    alert("WakeLockは解除されました");                      
+  });
+})();
+```
+
+ブックマークレットコードは、[Bookmarklet Maker](https://caiorss.github.io/bookmarklet-maker/)で生成しました。
+
+
+## 参考サイト
+
+[画面起動ロック API - Web API | MDN](https://developer.mozilla.org/ja/docs/Web/API/Screen_Wake_Lock_API)
+
+[Screen Wake Lock API を試す](https://misc.laboradian.com/web-test/007/)
