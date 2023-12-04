@@ -2,6 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useMDXComponent } from 'next-contentlayer/hooks';
+import { Pre } from './pre';
 
 interface MdxProps {
   code: string
@@ -32,6 +33,7 @@ function RoundedImage(props) {
 const components = {
   Image: RoundedImage,
   a: CustomLink,
+  pre: Pre,
 };
 
 export function Mdx({ code }: MdxProps) {
