@@ -1,6 +1,7 @@
-import { GithubIcon } from "src/components/github-icon"
 import Link from "next/link"
+import { GithubIcon } from "src/components/github-icon"
 import { ThreadsIcon } from "src/components/threads-icon"
+import { SizumeIcon } from "src/components/sizume-icon"
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
         </Link>
         <Link href="https://www.threads.net/@mgotow" target="_blank">
           <ThreadsIcon width={24} height={24} />
+        </Link>
+        <Link href="https://sizu.me/mgotow" target="_blank">
+          <SizumeIcon width={24} height={24} />
         </Link>
       </div>
     </section>
