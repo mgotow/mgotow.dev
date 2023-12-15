@@ -26,12 +26,15 @@ const CustomLink = (props) => {
   return <a target="_blank" rel="noopener noreferrer" {...props} />;
 };
 
-function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+function RoundedImageWithCaption(props) {
+  return <figure className="mt-4 mb-4">
+    <Image alt={props.alt} className="rounded-lg" {...props} />
+    {props.caption ? <figcaption className="text-gray">{props.caption}</figcaption> : <></>}
+  </figure>
 }
 
 const components = {
-  Image: RoundedImage,
+  Image: RoundedImageWithCaption,
   a: CustomLink,
   pre: Pre,
 };
