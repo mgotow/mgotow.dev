@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <section>
       <h1 className="text-2xl font-bold mb-4">About me</h1>
-      <div className="flex gap-6 items-center">
+      <div className="flex gap-4 items-center">
         <Image
           src="/icon.png"
           width={72}
