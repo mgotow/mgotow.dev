@@ -7,7 +7,7 @@ export default function DiaryItem({ post }) {
     <li className="flex flex-col border border-gray rounded-lg p-4">
       <p className="text-sm text-gray">{formatDate(post.publishedAt)}</p>
       <Link href={`/diary/${post.slug}`}>
-        <h2 className="font-bold m-0">{post.title}</h2>
+        <h2 className="font-bold mt-0 mb-2">{post.title}</h2>
       </Link>
       <Mdx code={post.body.code} />
     </li>
