@@ -6,7 +6,7 @@ export type PageProps = {
   currentPage: number,
 };
 
-export default function Pagination({ linkPath, totalPage, currentPage}: PageProps) {
+export default function Pagination({ linkPath, totalPage, currentPage }: PageProps) {
 
   const GoFirst = () => {
     if (Number(currentPage) > 1) {
@@ -74,7 +74,7 @@ export default function Pagination({ linkPath, totalPage, currentPage}: PageProp
 
   return (
     <nav className="mb-6 mt-6">
-      <ul className="flex items-center justify-center gap-4">
+      <ul className="flex items-center justify-center gap-4 list-none list-inside">
         <GoFirst />
         <GoPrev />
         <li>

@@ -8,7 +8,7 @@ export default function BlogListItem({ post }) {
       className="flex items-center"
     >
       <div className="flex flex-col">
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <p className="text-sm text-gray">
             {formatDate(post.publishedAt)}
           </p>
