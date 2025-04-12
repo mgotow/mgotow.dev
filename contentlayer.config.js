@@ -22,8 +22,8 @@ const computedFields = {
       image: doc.image
         ? `https://mgotow.dev/${doc.image}`
         : doc.title
-        ? `https://mgotow.dev/og?title=${doc.title}`
-        : `https://mgotow.dev/og?title=${doc._raw.flattenedPath.split("/")[1]}`,
+          ? `https://mgotow.dev/og?title=${doc.title}`
+          : `https://mgotow.dev/og?title=${doc._raw.flattenedPath.split("/")[1]}`,
       url: `https://mgotow.dev/${doc._raw.flattenedPath}`,
       author: {
         '@type': 'Person',
@@ -61,9 +61,9 @@ export const Blog = defineDocumentType(() => ({
   computedFields,
 }));
 
-export const Diary = defineDocumentType(() => ({
-  name: 'Diary',
-  filePathPattern: 'diary/*.mdx',
+export const Note = defineDocumentType(() => ({
+  name: 'Note',
+  filePathPattern: 'note/*.mdx',
   contentType: 'mdx',
   fields: {
     title: {
@@ -80,7 +80,7 @@ export const Diary = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [Blog, Diary],
+  documentTypes: [Blog, Note],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

@@ -41,7 +41,7 @@ export default function MainMenu() {
               <span className={clsx(
                 "relative",
                 {
-                  'font-bold' : pathname === '/'
+                  'font-bold': pathname === '/'
                 }
               )}>
                 Home
@@ -53,22 +53,22 @@ export default function MainMenu() {
               <span className={clsx(
                 "relative",
                 {
-                  'font-bold' : pathname === '/blog'
+                  'font-bold': pathname === '/blog'
                 }
               )}>
                 Blog
               </span>
             </Link>
             <Link
-              href="/diary"
+              href="/note"
             >
               <span className={clsx(
                 "relative",
                 {
-                  'font-bold' : pathname === '/diary'
+                  'font-bold': pathname === '/note'
                 }
               )}>
-                Diary
+                Note
               </span>
             </Link>
           </div>

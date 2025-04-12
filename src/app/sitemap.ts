@@ -1,4 +1,4 @@
-import { allBlogs } from 'contentlayer/generated';
+import { allBlogs, allNotes } from 'contentlayer/generated';
 
 export default async function sitemap() {
   const blogs = allBlogs.map((post) => ({
@@ -6,12 +6,17 @@ export default async function sitemap() {
     lastModified: post.publishedAt,
   }));
 
-  const routes = ['', '/blog', '/diary'].map(
+  const notes = allNotes.map((note) => ({
+    url: `https://mgotow.dev/note/${note.slug}`,
+    lastModified: note.publishedAt,
+  }));
+
+  const routes = ['', '/blog', '/note'].map(
     (route) => ({
       url: `https://mgotow.dev${route}`,
       lastModified: new Date().toISOString().split('T')[0],
     })
   );
 
-  return [...routes, ...blogs];
+  return [...routes, ...blogs, ...notes];
 }

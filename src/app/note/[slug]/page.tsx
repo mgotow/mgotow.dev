@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Mdx } from 'src/components/mdx';
-import { allDiaries } from 'contentlayer/generated';
+import { allNotes } from 'contentlayer/generated';
 import { formatDate } from 'src/lib/format';
 
 export const dynamic = 'force-static';
@@ -9,7 +9,10 @@ export const dynamic = 'force-static';
 export async function generateMetadata({
   params,
 }): Promise<Metadata | undefined> {
-  const post = allDiaries.find((post) => post.slug === params.slug);
+  const post = allNotes.find((post) => post.slug === params.slug);
+  if (!post) {
+    notFound();
+  }
   const {
     title,
     publishedAt: publishedTime,
@@ -22,7 +25,7 @@ export async function generateMetadata({
       title,
       type: 'article',
       publishedTime,
-      url: `https://mgotow.dev/diary/${slug}`,
+      url: `https://mgotow.dev/note/${slug}`,
       images: [
         {
           url: ogImage,
@@ -37,8 +40,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Diary({ params }) {
-  const post = allDiaries.find((post) => post.slug === params.slug);
+export default async function Note({ params }) {
+  const post = allNotes.find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();
@@ -53,7 +56,7 @@ export default async function Diary({ params }) {
           __html: JSON.stringify(post.structuredData),
         }}
       ></script>
-      <h1 className="font-bold text-2xl tracking-tigher">
+      <h1 className="font-bold text-2xl tracking-tighter">
         {post.title}
       </h1>
       <div className="flex justify-start items-center mt-2 mb-4 gap-2 text-sm max-w-[650px]">
