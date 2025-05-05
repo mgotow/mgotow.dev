@@ -18,7 +18,7 @@ export default function Home() {
         />
         <div className="flex flex-col">
           <p className="text-lg font-bold">mgotow</p>
-          <p>Programmer living in Tottori, Japan.</p>
+          <p>よわエンジニア 鳥取在住 ゲーム好き 個人開発したい人</p>
           <div className="mt-2 mb-2 flex gap-1">
             <Link href="https://github.com/mgotow" target="_blank">
               <GithubIcon width={24} height={24} />
