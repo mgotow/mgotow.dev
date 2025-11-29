@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { allNotes } from 'contentlayer/generated';
-import NoteItem from 'src/components/note-item';
+import NoteItem from 'src/components/diary-item';
 import Pagination from 'src/components/pagination';
 
 export async function generateMetadata({

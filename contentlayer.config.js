@@ -61,9 +61,9 @@ export const Blog = defineDocumentType(() => ({
   computedFields,
 }));
 
-export const Note = defineDocumentType(() => ({
-  name: 'Note',
-  filePathPattern: 'note/*.mdx',
+export const Diary = defineDocumentType(() => ({
+  name: 'Diary',
+  filePathPattern: 'diary/*.mdx',
   contentType: 'mdx',
   fields: {
     title: {
@@ -80,7 +80,7 @@ export const Note = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [Blog, Note],
+  documentTypes: [Blog, Diary],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
