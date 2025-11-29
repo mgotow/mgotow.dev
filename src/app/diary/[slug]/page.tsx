@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Mdx } from 'src/components/mdx';
-import { allNotes } from 'contentlayer/generated';
+import { allDiaries } from 'contentlayer/generated';
 import { formatDate } from 'src/lib/format';
 
 export const dynamic = 'force-static';
@@ -9,7 +9,7 @@ export const dynamic = 'force-static';
 export async function generateMetadata({
   params,
 }): Promise<Metadata | undefined> {
-  const post = allNotes.find((post) => post.slug === params.slug);
+  const post = allDiaries.find((post) => post.slug === params.slug);
   if (!post) {
     notFound();
   }
@@ -25,7 +25,7 @@ export async function generateMetadata({
       title,
       type: 'article',
       publishedTime,
-      url: `https://mgotow.dev/note/${slug}`,
+      url: `https://mgotow.dev/diary/${slug}`,
       images: [
         {
           url: ogImage,
@@ -40,8 +40,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Note({ params }) {
-  const post = allNotes.find((post) => post.slug === params.slug);
+export default async function Diary({ params }) {
+  const post = allDiaries.find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();

@@ -60,15 +60,15 @@ export default function MainMenu() {
               </span>
             </Link>
             <Link
-              href="/note"
+              href="/diary"
             >
               <span className={clsx(
                 "relative",
                 {
-                  'font-bold': pathname === '/note'
+                  'font-bold': pathname === '/diary'
                 }
               )}>
-                Note
+                Diary
               </span>
             </Link>
           </div>
