@@ -1,22 +1,23 @@
+import * as React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Mdx } from 'src/components/mdx';
-import { allDiaries } from 'contentlayer/generated';
+import { allDiaries } from 'contentlayer2/generated';
 import { formatDate } from 'src/lib/format';
 
 export const dynamic = 'force-static';
 
-export async function generateMetadata({
-  params,
-}): Promise<Metadata | undefined> {
-  const post = allDiaries.find((post) => post.slug === params.slug);
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata | undefined> {
+  const { slug } = await params;
+  const post = allDiaries.find((post) => post.slug === slug);
   if (!post) {
-    notFound();
+    return; // Return undefined if post not found
   }
   const {
     title,
     publishedAt: publishedTime,
-    slug,
   } = post;
   const ogImage = `https://mgotow.dev/og?title=${title}`;
   return {
@@ -40,8 +41,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function Diary({ params }) {
-  const post = allDiaries.find((post) => post.slug === params.slug);
+export default async function Diary({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = allDiaries.find((post) => post.slug === slug);
 
   if (!post) {
     notFound();

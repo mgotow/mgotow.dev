@@ -1,22 +1,28 @@
+import * as React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Mdx } from 'src/components/mdx';
-import { allBlogs } from 'contentlayer/generated';
+import { allBlogs } from 'contentlayer2/generated';
 import TagList from 'src/components/tag-list';
 import { formatDate } from 'src/lib/format';
 
 export const dynamic = 'force-static';
 
-export async function generateMetadata({
-  params,
-}): Promise<Metadata | undefined> {
-  const post = allBlogs.find((post) => post.slug === params.slug);
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata | undefined> {
+  const { slug } = await params;
+  const post = allBlogs.find((post) => post.slug === slug);
+
+  if (!post) {
+    return; // Return undefined if post not found
+  }
+
   const {
     title,
     publishedAt: publishedTime,
     summary: description,
     image,
-    slug,
   } = post;
   const ogImage = image
     ? `https://mgotow.dev/${image}`
@@ -45,8 +51,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function Blog({ params }) {
-  const post = allBlogs.find((post) => post.slug === params.slug);
+export default async function Blog({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = allBlogs.find((post) => post.slug === slug);
 
   if (!post) {
     notFound();

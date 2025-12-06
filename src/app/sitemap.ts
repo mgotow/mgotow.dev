@@ -1,4 +1,4 @@
-import { allBlogs, allDiaries } from 'contentlayer/generated';
+import { allBlogs, allDiaries } from 'contentlayer2/generated';
 
 export default async function sitemap() {
   const blogs = allBlogs.map((post) => ({

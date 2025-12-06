@@ -1,21 +1,24 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { allDiaries } from 'contentlayer/generated';
+import { allDiaries } from 'contentlayer2/generated';
 import DiaryItem from 'src/components/diary-item';
 import Pagination from 'src/components/pagination';
 
-export async function generateMetadata({
-  params,
-}): Promise<Metadata | undefined> {
+export async function generateMetadata(
+  { params }: { params: Promise<{ page: string }> }
+): Promise<Metadata | undefined> {
+  const { page } = await params;
   return {
-    title: "page: " + params.page + "\"",
-    description: "mgotow's diary posts page: " + params.page
+    title: "page: " + page + "\"",
+    description: 'mgotow\'s diary posts page: ' + page
   };
 }
 
-export default async function Page({ params }) {
+export default async function Page({ params }: { params: Promise<{ page: string }> }) {
+  const { page: pageParam } = await params;
+  const page = parseInt(pageParam, 10);
   const totalPage = Math.ceil(allDiaries.length / 10);
-  const num = params.page - 1;
+  const num = page - 1;
   const posts = allDiaries
     .sort((a, b) => {
       if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
@@ -30,13 +33,13 @@ export default async function Page({ params }) {
 
   return (
     <section>
-      <h1 className="text-2xl font-bold mb-4">Diary posts page: {params.page}</h1>
+      <h1 className="text-2xl font-bold mb-4">Diary posts page: {page}</h1>
       <ul className="flex flex-col gap-4">
         {posts.map((post) => (
           <DiaryItem post={post} key={post.slug} />
         ))}
       </ul>
-      <Pagination linkPath="/diary/page" totalPage={totalPage} currentPage={params.page} />
+      <Pagination linkPath="/diary/page" totalPage={totalPage} currentPage={page} />
     </section>
   )
 }

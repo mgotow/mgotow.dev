@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { allBlogs } from 'contentlayer/generated';
+import { allBlogs } from 'contentlayer2/generated';
 import BlogListItem from '../../components/blog-list-item';
 import Pagination from '../../components/pagination';
 
