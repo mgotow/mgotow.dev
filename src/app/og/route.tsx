@@ -1,6 +1,8 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
 
+export const runtime = 'edge';
+
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const postTitle = searchParams.get('title');
@@ -25,11 +27,9 @@ export async function GET(req: NextRequest) {
             marginRight: 190,
             display: 'flex',
             fontSize: 130,
-            fontFamily: 'Noto Sans JP',
-            fontWeight: 100,
             letterSpacing: '-0.05em',
             color: '#2B2B2B',
-            lineHeight: '120px',
+            lineHeight: '180px',
             whiteSpace: 'pre-wrap',
           }}
         >
