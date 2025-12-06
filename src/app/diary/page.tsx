@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { allDiaries } from 'contentlayer/generated';
+import { allDiaries } from 'contentlayer2/generated';
 import Pagination from '../../components/pagination';
 import DiaryItem from '../../components/diary-item';
 
