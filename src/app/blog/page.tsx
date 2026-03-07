@@ -5,7 +5,12 @@ import Pagination from '../../components/pagination';
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: 'mgotow\'s blog posts'
+  description: 'mgotow\'s blog posts',
+  alternates: {
+    types: {
+      'application/rss+xml': 'https://mgotow.dev/blog/feed.xml',
+    },
+  },
 };
 
 export default async function BlogPage() {

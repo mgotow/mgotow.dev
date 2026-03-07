@@ -5,7 +5,12 @@ import DiaryItem from '../../components/diary-item';
 
 export const metadata: Metadata = {
   title: 'Diary',
-  description: 'mgotow\'s diary posts'
+  description: 'mgotow\'s diary posts',
+  alternates: {
+    types: {
+      'application/rss+xml': 'https://mgotow.dev/diary/feed.xml',
+    },
+  },
 };
 
 export default async function DiaryPage() {
