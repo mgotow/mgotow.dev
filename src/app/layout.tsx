@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { Noto_Sans_JP } from 'next/font/google';
 import clsx from 'clsx';
 import MainMenu from '../components/main-menu';
@@ -58,6 +59,7 @@ export default function RootLayout({
         <div className="pl-8 pr-8">
           {children}
         </div>
+        <Analytics />
       </body>
     </html>
   )
