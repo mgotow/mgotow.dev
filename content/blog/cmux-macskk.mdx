@@ -1,0 +1,116 @@
+---
+title: cmuxのmacSKK日本語入力設定
+publishedAt: 2026-06-06
+summary: cmuxでmacSKKによる日本語入力できない問題を解決
+tags: [cmux, macskk]
+---
+
+↓macSKK作者様の記事を参考に、cmuxでmacSKKによる日本語入力ができない(Ctrl-Jが効かなくてひらがなモードに移れない)問題が解決したのでメモ
+
+[Ghostty上でmacSKKを使えるようにする](https://zenn.dev/mtgto/articles/macskk-karabiner-settings-for-ghostty)
+
+## `Ctrl-J`でひらがなモードに入れない問題
+cmux(ghostty)設定
+
+~/Library/Application Support/com.mitchellh.ghostty/config.ghostty
+```
+keybind = ctrl+j=ignore
+```
+
+## `q`,`l`が漏れる問題
+Karabiner-Elementsが必要みたい
+
+### ①キーボード設定の入力ソースに、macskkのABC・ひらがな・カタカナを追加しておく
+
+<Image
+  src="/images/cmux-macskk/macskk-input-source.png"
+  alt="入力ソースのスクリーンショット"
+  width="835"
+  height="830"
+/>
+
+### ②Karabiner-Elements設定
+
+Karabiner-Elements Settings > Complex Modifications > Add your own rule
+```json
+{
+    "description": "macSKK for cmux",
+    "manipulators": [
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com\\.cmuxterm\\.app$"
+                    ],
+                    "type": "frontmost_application_if"
+                },
+                {
+                    "input_sources": [{ "input_source_id": "^net\\.mtgto\\.inputmethod\\.macSKK\\.(hiragana|katakana|hankaku)$" }],
+                    "type": "input_source_if"
+                }
+            ],
+            "from": { "key_code": "l" },
+            "to": [
+                {
+                    "select_input_source": {
+                        "input_mode_id": "net.mtgto.inputmethod.macSKK.ascii",
+                        "input_source_id": "net.mtgto.inputmethod.macSKK.ascii",
+                        "language": "en"
+                    }
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com\\.cmuxterm\\.app$"
+                    ],
+                    "type": "frontmost_application_if"
+                },
+                {
+                    "input_sources": [{ "input_source_id": "^net\\.mtgto\\.inputmethod\\.macSKK\\.(katakana|hankaku)$" }],
+                    "type": "input_source_if"
+                }
+            ],
+            "from": { "key_code": "q" },
+            "to": [
+                {
+                    "select_input_source": {
+                        "input_mode_id": "net.mtgto.inputmethod.macSKK.hiragana",
+                        "input_source_id": "net.mtgto.inputmethod.macSKK.hiragana",
+                        "language": "ja"
+                    }
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "^com\\.cmuxterm\\.app$"
+                    ],
+                    "type": "frontmost_application_if"
+                },
+                {
+                    "input_sources": [{ "input_source_id": "^net\\.mtgto\\.inputmethod\\.macSKK\\.hiragana$" }],
+                    "type": "input_source_if"
+                }
+            ],
+            "from": { "key_code": "q" },
+            "to": [
+                {
+                    "select_input_source": {
+                        "input_mode_id": "net.mtgto.inputmethod.macSKK.katakana",
+                        "input_source_id": "net.mtgto.inputmethod.macSKK.katakana",
+                        "language": "ja"
+                    }
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
+```
