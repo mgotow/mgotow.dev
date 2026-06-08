@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  code {
+    @apply border border-gray px-1 mx-1 py-0.5 rounded text-sm font-mono text-black;
+  }
+
+  pre code {
+    @apply bg-transparent border-none p-0 rounded-none text-inherit;
+  }
+
   pre {
     @apply p-4 rounded overflow-x-auto;
   }
