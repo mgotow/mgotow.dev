@@ -15,6 +15,10 @@
     @apply p-4 rounded overflow-x-auto;
   }
 
+  article p {
+    @apply mt-4 mb-4;
+  }
+
   a {
     @apply underline underline-offset-4;
   }
